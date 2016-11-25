@@ -46,6 +46,7 @@ class Slider {
   int slideY;
   int value;
   String sliderText;
+  boolean Col;
   Slider(int _x, int _y, int _len, int _min, int _max, String _sliderText) {
     x=_x;
     y=_y;
@@ -75,12 +76,10 @@ class Slider {
 
   void collide() {
     // collie test a squares and if any coordinate of the rect passed to it are are within the other it returns true
-    if ((((mouseX<=slideX+60)&&(mouseX>slideX))||((slideX<=mouseX+1)&&(slideX>mouseX)))&&(((mouseY<=slideY+70)&&(mouseY>slideY))||((slideY<=mouseY+1)&&(slideY>mouseY))))
+    if (Col||(((mouseX<=slideX+60)&&(mouseX>slideX))||((slideX<=mouseX+1)&&(slideX>mouseX)))&&(((mouseY<=slideY+70)&&(mouseY>slideY))||((slideY<=mouseY+1)&&(slideY>mouseY))))
     {
-    
+      Col = true;
       slideX=constrain(mouseX,x,x+floor(len))-25;
     }
-  }
-  
-  
+  } 
 }

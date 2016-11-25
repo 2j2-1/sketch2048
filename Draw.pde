@@ -6,6 +6,10 @@ void display_slider() {
       depth.collide();
       sliders.get(i).collide();
     }
+    else{
+      depth.Col = false;
+      sliders.get(i).Col = false;
+    }
   }
 }
 

@@ -34,7 +34,6 @@ void reset() {
   }
   place();
   place();
-  redraw();
 }
 
 void move(int Key) {
@@ -124,6 +123,5 @@ void move(int Key) {
     if (placed) {
       place();
     }
-    redraw();
   }
 }
