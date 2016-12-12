@@ -18,11 +18,6 @@ class Population {
     pop_fitness = new int[size];
   }
 
-  void mutate() {
-    for (int i = 0; i<size; i++) {
-      pop[i].mutation();
-    }
-  }
 
   void fitness() {
     for (int i = 0; i<size; i++) {
@@ -41,16 +36,8 @@ class Population {
 
   void breed() {
     temp = pop;
-    for (int i = 0; i<size; i++) {
-      int r = floor(random(max_fitness));
-      boolean exit = false;
-      while (!exit) {
-        int q =floor(random(size));
-        if (pop_fitness[q] >= r) {
-          pop[i].crossover(temp[q]);
-        }
-        exit = true;
-      }
+    for (int i = 0; i<pop.length/4; i++) {
+      pop[i].mutation();
     }
   }
 
@@ -66,5 +53,32 @@ class Population {
       sum+=pop_fitness[i];
     }
     return sum/pop_fitness.length;
+  }
+
+  int index_fitness(int[] fit, int a){
+    int location;
+    for (int i=0; i< pop_fitness.length;i++){
+
+
+    }
+    return
+  }
+
+  void sort_pop(){
+    temp = pop;
+    int[] tempFitness = pop_fitness;
+    pop_fitness = sort(pop_fitness);
+    for (int i=0; i< temp.length;i++){
+
+
+    }
+
+  }
+  void evolve(){
+      fitness();
+      //fitness_power();
+      sort_pop();
+      breed();
+
   }
 }
