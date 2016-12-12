@@ -1,7 +1,7 @@
 class neural_network {
   float[][][] weightList;
- 
- 
+
+
   neural_network(float[][][] WeightList) {
     weightList = WeightList;
     //println(weightList);

@@ -14,15 +14,16 @@ void mousePressed() {
     }
   } else if (menu==2) {
     if (nextButton.collide()) {
-      println(num_rows);
+      //println(num_rows);
       a = new Weight(num_rows);
       nn = new neural_network(a.allWeights);
+      testingPop = new Population(1000, num_rows);
       menu=1;
     }
   }
 }
 
 void mouseReleased(){
-  
+
 
 }

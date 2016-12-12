@@ -29,7 +29,7 @@ class Weight {
   }
 
   void settingWeigth() {
-    switch(depth) {
+    switch(num_rows.length) {
     case 2:
       w1 = new float[rowSize[0]][rowSize[1]];
       w1 = randomWeights(w1);
@@ -119,7 +119,7 @@ class Weight {
       w8 = randomWeights(w8);
       break;
     }
-    switch(depth) {
+    switch(num_rows.length) {
     case 2:
       float[][][] _allWeights1 = {w1};
       allWeights = _allWeights1;

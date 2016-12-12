@@ -32,3 +32,5 @@ Button newGameButton;
 Button nextButton;
 neural_network nn;
 Weight a;
+Population testingPop;
+Weight popWeights;
