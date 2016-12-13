@@ -10,6 +10,15 @@ float[][] dot(float[][] a, float[][] b) {
   return c;
 }
 
+boolean in(int b, int[]a){
+  for (int i = 0; i < a.length;i++){
+    if (a[i] == b){
+      return true;
+    }
+  }
+  return false;
+}
+
 int index(float[]a , float b){
   for (int i = 0; i < a.length;i++){
     if (a[i] == b){

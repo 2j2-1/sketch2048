@@ -10,7 +10,7 @@ class neural_network {
 
   void forward(float[][] x) {
     for (int i =0; i<weightList.length;i++){
-      x = dot(x, weightList[i]);
+      x = sigmoid(dot(x, weightList[i]));
     }
     switch(index(x[0],max(x[0]))){
     case 0:

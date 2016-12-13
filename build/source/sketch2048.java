@@ -246,10 +246,19 @@ class DNA {
     genes = _genes;
   }
 
-  public void mutation() {
-    for (int x = 0; x < genes.length; x++) {  for (int y = 0; y < genes[x].length; y++) {  for (int z = 0; z < genes[x][y].length; z++) {  if (random(1) < 0.01f) {
-      genes[x][y][z] = random(-1, 1);
-     }}}}}
+  public void mutation(DNA partner) {
+    for (int x = 0; x < genes.length; x++) {
+        for (int y = 0; y < genes[x].length; y++) {
+            for (int z = 0; z < genes[x][y].length; z++) {
+                if (random(1) < 0.001f) {
+                    genes[x][y][z] += random(-0.1f, 0.1f);}
+                else{
+                  genes[x][y][z] = partner.genes[x][y][z];
+                }
+                }
+                }
+                }
+              }
 
 }
 public void display_slider() {
@@ -343,6 +352,15 @@ public float[][] dot(float[][] a, float[][] b) {
     }
   }
   return c;
+}
+
+public boolean in(int b, int[]a){
+  for (int i = 0; i < a.length;i++){
+    if (a[i] == b){
+      return true;
+    }
+  }
+  return false;
 }
 
 public int index(float[]a , float b){
@@ -473,7 +491,7 @@ public void mousePressed() {
       //println(num_rows);
       a = new Weight(num_rows);
       nn = new neural_network(a.allWeights);
-      testingPop = new Population(10, num_rows);
+      testingPop = new Population(1000, num_rows);
       menu=1;
     }
   }
@@ -495,7 +513,7 @@ class neural_network {
 
   public void forward(float[][] x) {
     for (int i =0; i<weightList.length;i++){
-      x = dot(x, weightList[i]);
+      x = sigmoid(dot(x, weightList[i]));
     }
     switch(index(x[0],max(x[0]))){
     case 0:
@@ -738,7 +756,7 @@ class Population {
       for (int j=0; j<500; j++) {
         a.forward(testBoard);
       }
-      pop_fitness[i]=score*max_board();
+      pop_fitness[i]=score;
       pop[i].fitness= pop_fitness[i];
       //println(pop_fitness[i]);
     }
@@ -747,8 +765,8 @@ class Population {
 // chnage this function so it muates last 3/4 with mutaions of the first
   public void breed() {
     temp = pop;
-    for (int i = pop.length/4; i<pop.length; i++) {
-      pop[i].mutation();
+    for (int i = 0; i<PApplet.parseInt(pop.length*0.75f); i++) {
+      pop[i].mutation(pop[PApplet.parseInt(random(PApplet.parseInt(pop.length*0.75f),pop.length))]);
     }
   }
 
@@ -768,34 +786,36 @@ class Population {
     return sum/pop_fitness.length;
   }
 
+
   public void sort_pop(){
-    temp = pop;
-    int[] tempFitness = pop_fitness;
-    pop_fitness = sort(pop_fitness);
+    int temp;
+    DNA tempDNA;
+    for (int i = 1; i<pop_fitness.length;i++){
+      for (int j = 0; j<pop_fitness.length-1;j++){
+        if (pop_fitness[j] > pop_fitness[j+1]){
+          temp = pop_fitness[j];
+          tempDNA = pop[j];
 
-    int[] newOrder = new int[tempFitness.length];
-    for (int i=0; i< temp.length;i++){
-      newOrder[i] = index_fitness(pop_fitness,tempFitness[i]);
-      // pop_fitness[index_fitness(pop_fitness,tempFitness[i])];
-    }
+          pop_fitness[j] = pop_fitness[j+1];
+          pop[j]=pop[j+1];
 
-    for (int i=0; i< temp.length;i++){
-      pop[i] = temp[newOrder[temp.length-1-i]];
+          pop_fitness[j+1] = temp;
+          pop[j+1]=tempDNA;
+        }
+      }
     }
   }
 
   public void evolve(){
       fitness();
       //fitness_power();
-      for (int i=0; i< pop.length;i++){
-        println(pop[i].fitness);
-      }
-      println();
       sort_pop();
-      for (int i=0; i< pop.length;i++){
+      for (int i = 0; i<pop.length;i++){
         println(pop[i].fitness);
       }
-      //breed();
+
+      println();
+      breed();
 
   }
 }

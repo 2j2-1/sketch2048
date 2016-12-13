@@ -29,7 +29,7 @@ class Population {
       for (int j=0; j<500; j++) {
         a.forward(testBoard);
       }
-      pop_fitness[i]=score*max_board();
+      pop_fitness[i]=score;
       pop[i].fitness= pop_fitness[i];
       //println(pop_fitness[i]);
     }
@@ -38,8 +38,8 @@ class Population {
 // chnage this function so it muates last 3/4 with mutaions of the first
   void breed() {
     temp = pop;
-    for (int i = pop.length/4; i<pop.length; i++) {
-      pop[i].mutation();
+    for (int i = 0; i<int(pop.length*0.75); i++) {
+      pop[i].mutation(pop[int(random(int(pop.length*0.75),pop.length))]);
     }
   }
 
@@ -59,35 +59,36 @@ class Population {
     return sum/pop_fitness.length;
   }
 
-  // fix this function, not sorting population properly
+
   void sort_pop(){
-    temp = pop;
-    int[] tempFitness = pop_fitness;
-    pop_fitness = sort(pop_fitness);
+    int temp;
+    DNA tempDNA;
+    for (int i = 1; i<pop_fitness.length;i++){
+      for (int j = 0; j<pop_fitness.length-1;j++){
+        if (pop_fitness[j] > pop_fitness[j+1]){
+          temp = pop_fitness[j];
+          tempDNA = pop[j];
 
-    int[] newOrder = new int[tempFitness.length];
-    for (int i=0; i< temp.length;i++){
-      newOrder[i] = index_fitness(pop_fitness,tempFitness[i]);
-      // pop_fitness[index_fitness(pop_fitness,tempFitness[i])];
-    }
+          pop_fitness[j] = pop_fitness[j+1];
+          pop[j]=pop[j+1];
 
-    for (int i=0; i< temp.length;i++){
-      pop[i] = temp[newOrder[temp.length-1-i]];
+          pop_fitness[j+1] = temp;
+          pop[j+1]=tempDNA;
+        }
+      }
     }
   }
 
   void evolve(){
       fitness();
       //fitness_power();
-      for (int i=0; i< pop.length;i++){
-        println(pop[i].fitness);
-      }
-      println();
       sort_pop();
-      for (int i=0; i< pop.length;i++){
+      for (int i = 0; i<pop.length;i++){
         println(pop[i].fitness);
       }
-      //breed();
+
+      println();
+      breed();
 
   }
 }
