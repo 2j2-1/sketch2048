@@ -33,10 +33,10 @@ class Population {
     }
     max_fitness = max(pop_fitness);
   }
-
+// chnage this function so it muates last 3/4 with mutaions of the first
   void breed() {
     temp = pop;
-    for (int i = 0; i<pop.length/4; i++) {
+    for (int i = pop.length/4; i<pop.length; i++) {
       pop[i].mutation();
     }
   }
@@ -58,27 +58,38 @@ class Population {
   int index_fitness(int[] fit, int a){
     int location;
     for (int i=0; i< pop_fitness.length;i++){
-
-
+      if (a==fit[i]){
+        return i;
+      }
     }
-    return
+    return -1;
   }
 
   void sort_pop(){
     temp = pop;
     int[] tempFitness = pop_fitness;
     pop_fitness = sort(pop_fitness);
+
+    int[] newOrder = new int[tempFitness.length];
     for (int i=0; i< temp.length;i++){
-
-
+      newOrder[i] = index_fitness(pop_fitness,tempFitness[i]);
+      pop_fitness[index_fitness(pop_fitness,tempFitness[i])] = 0;
+    }
+    //println(newOrder);
+    for (int i=0; i< temp.length;i++){
+      pop[i] = temp[newOrder[temp.length-1-i]];
     }
 
   }
+
   void evolve(){
+
       fitness();
+      println(pop_fitness);
+      println();
       //fitness_power();
       sort_pop();
-      breed();
+      //breed();
 
   }
 }
