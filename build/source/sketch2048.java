@@ -241,7 +241,7 @@ class Slider {
 }
 class DNA {
   float genes[][][];
-
+  float fitness;
   DNA(float[][][] _genes) {
     genes = _genes;
   }
@@ -354,6 +354,16 @@ public int index(float[]a , float b){
   return -1;
 }
 
+public int index_fitness(int[] fit, int a){
+  int location;
+  for (int i=0; i< fit.length;i++){
+    if (a==fit[i]){
+      return i;
+    }
+  }
+  return -1;
+}
+
 public float[][] sigmoid(float[][] a) {
     float b[][] = new float[a.length][a[0].length];
     for (int x = 0; x<a.length; x++) {
@@ -363,7 +373,7 @@ public float[][] sigmoid(float[][] a) {
     }
     return a;
   }
-  
+
 public float[] con(float[]a, float[]b, float[] c, float[] d){
   float[] e = new float[16];
   for (int i=0;i<3;i++){
@@ -405,31 +415,6 @@ public void keyPressed() {
     move(keyCode);
   }
 }
-
-float[][] saveBoard = new float[1][16];
-//float[][] testBoard = new float[1][16];
-//boolean same;
-//boolean found = false;
-//while (!found) {
-//  same = true;
-//  testBoard[0] = concat(concat(board[0], board[1]), concat(board[2], board[3]));
-//  saveBoard[0] = concat(concat(board[0], board[1]), concat(board[2], board[3]));
-//  nn.forward(testBoard);
-//  testBoard[0] = concat(concat(board[0], board[1]), concat(board[2], board[3]));
-
-//  for (int x =0; x < 16; x++) {
-//    println(round(saveBoard[0][x]), round(testBoard[0][x]));
-//    if (round(saveBoard[0][x]) != round(testBoard[0][x])) {
-//      //println(round(saveBoard[0][x]), round(testBoard[0][x]));
-//      same = false;
-//      break;
-//    }
-//  }
-//  println();
-//  if (same) {
-//    found = true;
-//  }
-//println(score*max_board());
 public void gameMenuSetup() {
   menuButton = new Button(inbetween+xOff, board_dimension*seperation/board_dimension+inbetween+yOff, ceil(((seperation/board_dimension-1))*2-inbetween/2), 50, mono24);
   nextButton = new Button(inbetween+xOff+((seperation/board_dimension-1)*2-inbetween/2)+inbetween/2+2, board_dimension*seperation/board_dimension+inbetween+yOff, ceil(((seperation/board_dimension-1))*2-inbetween/2), 50, mono24);
@@ -540,6 +525,7 @@ int yOffText=0;
 int[] num_rows;
 
 float[][] board = new float[board_dimension][board_dimension];
+float[][] saveBoard = new float[1][16];
 
 int[] tileColor= {color(255, 198, 150), color(255, 179, 110), color(255, 136, 18), color(255, 110, 0), color(255, 90, 0), color(255, 60, 0), color(255, 0, 0), color(255, 200, 0), color(255, 255, 0), color(128, 255, 0), color(0, 255, 0), color(0, 255, 255), color(0, 0, 255), color(255, 0, 255), color(255, 128, 255)};
 
@@ -748,18 +734,20 @@ class Population {
       neural_network a = new neural_network(pop[i].genes);
       reset();
       pop_fitness[i]=0;
+      pop[i].fitness=0;
       for (int j=0; j<500; j++) {
         a.forward(testBoard);
       }
       pop_fitness[i]=score*max_board();
+      pop[i].fitness= pop_fitness[i];
       //println(pop_fitness[i]);
     }
     max_fitness = max(pop_fitness);
   }
-
+// chnage this function so it muates last 3/4 with mutaions of the first
   public void breed() {
     temp = pop;
-    for (int i = 0; i<pop.length/4; i++) {
+    for (int i = pop.length/4; i<pop.length; i++) {
       pop[i].mutation();
     }
   }
@@ -767,25 +755,17 @@ class Population {
   public void fitness_power(float power) {
     for (int i = 0; i<size; i++) {
       pop_fitness[i] = floor(pow(pop_fitness[i], power));
+      pop[i].fitness = floor(pow(pop[i].fitness, power));
     }
     max_fitness = max(pop_fitness);
   }
+
   public float average_fitness(){
     float sum = 0;
     for (int i=0;i<pop_fitness.length;i++){
       sum+=pop_fitness[i];
     }
     return sum/pop_fitness.length;
-  }
-
-  public int index_fitness(int[] fit, int a){
-    int location;
-    for (int i=0; i< pop_fitness.length;i++){
-      if (a==fit[i]){
-        return i;
-      }
-    }
-    return -1;
   }
 
   public void sort_pop(){
@@ -796,26 +776,26 @@ class Population {
     int[] newOrder = new int[tempFitness.length];
     for (int i=0; i< temp.length;i++){
       newOrder[i] = index_fitness(pop_fitness,tempFitness[i]);
-      pop_fitness[index_fitness(pop_fitness,tempFitness[i])] = 0;
+      // pop_fitness[index_fitness(pop_fitness,tempFitness[i])];
     }
-    //println(newOrder);
+
     for (int i=0; i< temp.length;i++){
       pop[i] = temp[newOrder[temp.length-1-i]];
     }
-
   }
 
   public void evolve(){
-
       fitness();
-      println(pop_fitness);
-      println();
       //fitness_power();
-      sort_pop();
-      //breed();
-      fitness();
-      println(pop_fitness);
+      for (int i=0; i< pop.length;i++){
+        println(pop[i].fitness);
+      }
       println();
+      sort_pop();
+      for (int i=0; i< pop.length;i++){
+        println(pop[i].fitness);
+      }
+      //breed();
 
   }
 }

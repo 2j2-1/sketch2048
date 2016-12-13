@@ -19,6 +19,16 @@ int index(float[]a , float b){
   return -1;
 }
 
+int index_fitness(int[] fit, int a){
+  int location;
+  for (int i=0; i< fit.length;i++){
+    if (a==fit[i]){
+      return i;
+    }
+  }
+  return -1;
+}
+
 float[][] sigmoid(float[][] a) {
     float b[][] = new float[a.length][a[0].length];
     for (int x = 0; x<a.length; x++) {
@@ -28,7 +38,7 @@ float[][] sigmoid(float[][] a) {
     }
     return a;
   }
-  
+
 float[] con(float[]a, float[]b, float[] c, float[] d){
   float[] e = new float[16];
   for (int i=0;i<3;i++){

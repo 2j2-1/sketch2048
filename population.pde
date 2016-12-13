@@ -25,10 +25,12 @@ class Population {
       neural_network a = new neural_network(pop[i].genes);
       reset();
       pop_fitness[i]=0;
+      pop[i].fitness=0;
       for (int j=0; j<500; j++) {
         a.forward(testBoard);
       }
       pop_fitness[i]=score*max_board();
+      pop[i].fitness= pop_fitness[i];
       //println(pop_fitness[i]);
     }
     max_fitness = max(pop_fitness);
@@ -44,9 +46,11 @@ class Population {
   void fitness_power(float power) {
     for (int i = 0; i<size; i++) {
       pop_fitness[i] = floor(pow(pop_fitness[i], power));
+      pop[i].fitness = floor(pow(pop[i].fitness, power));
     }
     max_fitness = max(pop_fitness);
   }
+
   float average_fitness(){
     float sum = 0;
     for (int i=0;i<pop_fitness.length;i++){
@@ -55,16 +59,7 @@ class Population {
     return sum/pop_fitness.length;
   }
 
-  int index_fitness(int[] fit, int a){
-    int location;
-    for (int i=0; i< pop_fitness.length;i++){
-      if (a==fit[i]){
-        return i;
-      }
-    }
-    return -1;
-  }
-
+  // fix this function, not sorting population properly
   void sort_pop(){
     temp = pop;
     int[] tempFitness = pop_fitness;
@@ -73,22 +68,25 @@ class Population {
     int[] newOrder = new int[tempFitness.length];
     for (int i=0; i< temp.length;i++){
       newOrder[i] = index_fitness(pop_fitness,tempFitness[i]);
-      pop_fitness[index_fitness(pop_fitness,tempFitness[i])] = 0;
+      // pop_fitness[index_fitness(pop_fitness,tempFitness[i])];
     }
-    //println(newOrder);
+
     for (int i=0; i< temp.length;i++){
       pop[i] = temp[newOrder[temp.length-1-i]];
     }
-
   }
 
   void evolve(){
-
       fitness();
-      println(pop_fitness);
-      println();
       //fitness_power();
+      for (int i=0; i< pop.length;i++){
+        println(pop[i].fitness);
+      }
+      println();
       sort_pop();
+      for (int i=0; i< pop.length;i++){
+        println(pop[i].fitness);
+      }
       //breed();
 
   }

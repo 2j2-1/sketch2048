@@ -10,6 +10,7 @@ int yOffText=0;
 int[] num_rows;
 
 float[][] board = new float[board_dimension][board_dimension];
+float[][] saveBoard = new float[1][16];
 
 color[] tileColor= {color(255, 198, 150), color(255, 179, 110), color(255, 136, 18), color(255, 110, 0), color(255, 90, 0), color(255, 60, 0), color(255, 0, 0), color(255, 200, 0), color(255, 255, 0), color(128, 255, 0), color(0, 255, 0), color(0, 255, 255), color(0, 0, 255), color(255, 0, 255), color(255, 128, 255)};
 

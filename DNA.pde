@@ -1,6 +1,6 @@
 class DNA {
   float genes[][][];
-
+  float fitness;
   DNA(float[][][] _genes) {
     genes = _genes;
   }
