@@ -425,8 +425,10 @@ public int max_board() {
 }
 public void keyPressed() {
   if (keyCode == 32) {
+    for (int i=0;i<1;i++){
     testingPop.evolve();
     println(testingPop.average_fitness());
+  }
     println();
   }
   else {
@@ -491,7 +493,7 @@ public void mousePressed() {
       //println(num_rows);
       a = new Weight(num_rows);
       nn = new neural_network(a.allWeights);
-      testingPop = new Population(1000, num_rows);
+      testingPop = new Population(100, num_rows);
       menu=1;
     }
   }
@@ -510,25 +512,11 @@ class neural_network {
     //println(weightList);
   }
 
-
-  public void forward(float[][] x) {
+  public float[][] forward(float[][] x) {
     for (int i =0; i<weightList.length;i++){
       x = sigmoid(dot(x, weightList[i]));
     }
-    switch(index(x[0],max(x[0]))){
-    case 0:
-    move(UP);
-    break;
-    case 1:
-    move(DOWN);
-    break;
-    case 2:
-    move(LEFT);
-    break;
-    case 3:
-    move(RIGHT);
-    break;
-  }
+    return x;
   }
 }
 int board_dimension=4;
@@ -754,19 +742,35 @@ class Population {
       pop_fitness[i]=0;
       pop[i].fitness=0;
       for (int j=0; j<500; j++) {
-        a.forward(testBoard);
+        testBoard[0] = concat(concat(board[0], board[1]), concat(board[2], board[3]));
+        float[][] x = a.forward(testBoard);
+        switch(index(x[0],max(x[0]))){
+        case 0:
+        move(UP);
+        break;
+        case 1:
+        move(DOWN);
+        break;
+        case 2:
+        move(LEFT);
+        break;
+        case 3:
+        move(RIGHT);
+        break;
       }
-      pop_fitness[i]=score;
+      }
+      pop_fitness[i]=score*max_board();
       pop[i].fitness= pop_fitness[i];
-      //println(pop_fitness[i]);
     }
     max_fitness = max(pop_fitness);
   }
-// chnage this function so it muates last 3/4 with mutaions of the first
+
   public void breed() {
     temp = pop;
-    for (int i = 0; i<PApplet.parseInt(pop.length*0.75f); i++) {
-      pop[i].mutation(pop[PApplet.parseInt(random(PApplet.parseInt(pop.length*0.75f),pop.length))]);
+    float top_percentage=0.05f;
+    for (int i = 0; i<=PApplet.parseInt(pop.length*(1.0f-top_percentage)); i++) {
+      //println(i);
+      pop[i].mutation(pop[PApplet.parseInt(random(PApplet.parseInt(pop.length*(1.0f-top_percentage)),pop.length))]);
     }
   }
 
@@ -810,9 +814,10 @@ class Population {
       fitness();
       //fitness_power();
       sort_pop();
-      for (int i = 0; i<pop.length;i++){
-        println(pop[i].fitness);
-      }
+      //println(pop_fitness);
+      //for (int i = 0; i<pop.length;i++){
+      println(pop[pop.length-1].fitness);
+      //}
 
       println();
       breed();

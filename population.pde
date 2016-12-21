@@ -27,19 +27,35 @@ class Population {
       pop_fitness[i]=0;
       pop[i].fitness=0;
       for (int j=0; j<500; j++) {
-        a.forward(testBoard);
+        testBoard[0] = concat(concat(board[0], board[1]), concat(board[2], board[3]));
+        float[][] x = a.forward(testBoard);
+        switch(index(x[0],max(x[0]))){
+        case 0:
+        move(UP);
+        break;
+        case 1:
+        move(DOWN);
+        break;
+        case 2:
+        move(LEFT);
+        break;
+        case 3:
+        move(RIGHT);
+        break;
       }
-      pop_fitness[i]=score;
+      }
+      pop_fitness[i]=score*max_board();
       pop[i].fitness= pop_fitness[i];
-      //println(pop_fitness[i]);
     }
     max_fitness = max(pop_fitness);
   }
-// chnage this function so it muates last 3/4 with mutaions of the first
+
   void breed() {
     temp = pop;
-    for (int i = 0; i<int(pop.length*0.75); i++) {
-      pop[i].mutation(pop[int(random(int(pop.length*0.75),pop.length))]);
+    float top_percentage=0.05;
+    for (int i = 0; i<=int(pop.length*(1.0-top_percentage)); i++) {
+      //println(i);
+      pop[i].mutation(pop[int(random(int(pop.length*(1.0-top_percentage)),pop.length))]);
     }
   }
 
@@ -83,9 +99,10 @@ class Population {
       fitness();
       //fitness_power();
       sort_pop();
-      for (int i = 0; i<pop.length;i++){
-        println(pop[i].fitness);
-      }
+      //println(pop_fitness);
+      //for (int i = 0; i<pop.length;i++){
+      println(pop[pop.length-1].fitness);
+      //}
 
       println();
       breed();

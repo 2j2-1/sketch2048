@@ -17,7 +17,7 @@ void mousePressed() {
       //println(num_rows);
       a = new Weight(num_rows);
       nn = new neural_network(a.allWeights);
-      testingPop = new Population(1000, num_rows);
+      testingPop = new Population(100, num_rows);
       menu=1;
     }
   }
