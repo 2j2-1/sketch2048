@@ -1,8 +1,10 @@
+//change to function name detect maxint
 void setup_board() {
   float maxint =0;
   for (int x=0; x< board_dimension; x++) {
     for (int y=0; y< board_dimension; y++) {
       if (board[x][y]>maxint) {
+        //checks 2d array for hghest int 
         maxint = board[x][y];
       }
     }
@@ -11,6 +13,7 @@ void setup_board() {
 
 void place() {
   boolean placed = false;
+  //searches board for free space if it cant game is over
   while (!placed) {
     int x=floor(random(board_dimension));
     int y=floor(random(board_dimension));
@@ -26,6 +29,7 @@ void place() {
 }
 
 void reset() {
+  //sets all values on board to 0
   score = 0;
   for (int x=0; x< board_dimension; x++) {
     for (int y=0; y< board_dimension; y++) {
@@ -40,15 +44,20 @@ void move(int Key) {
   if (menu == 1) {
     boolean placed = false;
     if (Key == UP) {
+      //up searchs the board from top down moving any avilbile up this causes the tiles that for form to for at the top most spot instead of wherebottom first
       for (int i=0; i< board_dimension; i++) {
         for (int x=0; x< board_dimension; x++) {
           for (int y=1; y< board_dimension; y++) {
             if (board[x][y]!=0) {
               if (board[x][y-1] == 0) {
+                //moves if availble
                 board[x][y-1] = board[x][y];
                 board[x][y] = 0;
                 placed = true;
               } else if (board[x][y-1] == board[x][y]) {
+                //sets the bottom most tile that can be joined to 0 then sets the top to itself times a random number between 1.999 and 2.0 this prevents mre then one 
+                //tile being joinedat a tiem and sets it back to normal at the end of the move by rounding, 1.999 and 2 is such a small difference the rounding error 
+                //never exceeds a great enough to be rounding to the wrong number  
                 score+=board[x][y]*2;
                 board[x][y-1] = board[x][y]*random(1.999, 2);
                 board[x][y] = 0;
@@ -119,7 +128,7 @@ void move(int Key) {
         }
       }
     }
-
+    // if any move has been made place a new tile 
     if (placed) {
       place();
     }

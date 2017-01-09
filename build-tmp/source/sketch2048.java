@@ -27,11 +27,13 @@ public void setup() {
 public void draw() {
   menuDisplay(menu);
 }
+//change to function name detect maxint
 public void setup_board() {
   float maxint =0;
   for (int x=0; x< board_dimension; x++) {
     for (int y=0; y< board_dimension; y++) {
       if (board[x][y]>maxint) {
+        //checks 2d array for hghest int 
         maxint = board[x][y];
       }
     }
@@ -40,6 +42,7 @@ public void setup_board() {
 
 public void place() {
   boolean placed = false;
+  //searches board for free space if it cant game is over
   while (!placed) {
     int x=floor(random(board_dimension));
     int y=floor(random(board_dimension));
@@ -55,6 +58,7 @@ public void place() {
 }
 
 public void reset() {
+  //sets all values on board to 0
   score = 0;
   for (int x=0; x< board_dimension; x++) {
     for (int y=0; y< board_dimension; y++) {
@@ -69,15 +73,20 @@ public void move(int Key) {
   if (menu == 1) {
     boolean placed = false;
     if (Key == UP) {
+      //up searchs the board from top down moving any avilbile up this causes the tiles that for form to for at the top most spot instead of wherebottom first
       for (int i=0; i< board_dimension; i++) {
         for (int x=0; x< board_dimension; x++) {
           for (int y=1; y< board_dimension; y++) {
             if (board[x][y]!=0) {
               if (board[x][y-1] == 0) {
+                //moves if availble
                 board[x][y-1] = board[x][y];
                 board[x][y] = 0;
                 placed = true;
               } else if (board[x][y-1] == board[x][y]) {
+                //sets the bottom most tile that can be joined to 0 then sets the top to itself times a random number between 1.999 and 2.0 this prevents mre then one 
+                //tile being joinedat a tiem and sets it back to normal at the end of the move by rounding, 1.999 and 2 is such a small difference the rounding error 
+                //never exceeds a great enough to be rounding to the wrong number  
                 score+=board[x][y]*2;
                 board[x][y-1] = board[x][y]*random(1.999f, 2);
                 board[x][y] = 0;
@@ -148,7 +157,7 @@ public void move(int Key) {
         }
       }
     }
-
+    // if any move has been made place a new tile 
     if (placed) {
       place();
     }
@@ -160,7 +169,6 @@ class Button {
   PFont textfont;
   
   Button(int _x, int _y, int _x1, int _y1, PFont _text) {
-    
     x=_x;
     y=_y;
     x1=_x1;
@@ -169,9 +177,13 @@ class Button {
     textfont = _text;
   }
   public void Draw() {
+    //PushMatrix is used to push out the block of code so it does not interfear with the rest
     pushMatrix();
+    //sets font if it has accidently been changed at another point
     textFont(textfont);
+    //centers text so will always be in the exact center of the button
     textAlign(CENTER, CENTER);
+    //universal color that can easily be changed with the addition of skins
     fill(tileColor[0]);
     rect(x, y, x1, y1,curve);
     fill(0);
@@ -209,18 +221,22 @@ class Slider {
     len=_len;
     min=_min;
     max=_max;
+    //offsets for asthetics
     slideX = x-25;
     slideY=y-35;
     sliderText = _sliderText;
   }
   public void display() {
+    //push matrix doesnt interfear with others
     pushMatrix();
     strokeWeight(2);
     fill(tileColor[0]);
+    //slider button
     rect(x, y, len, 10, 5);
     strokeWeight(1);
     rect(slideX+20, slideY+10, 20, 60, 5);
     popMatrix();
+    //round to a predefined limit to prevent float values unless specified
     value = round((((slideX+25)-x)/(len))*(max-min))+min;
     rect(x+len+25,y-20,100,50);
     fill(255);
@@ -343,6 +359,7 @@ public void menuDisplay(int Menu) {
   }
 }
 public float[][] dot(float[][] a, float[][] b) {
+  //the dots function take 2 matixs and perform a matrix multiplaction for the neural network
   float[][]c = new float[a.length][b[0].length];
   for (int x = 0; x<a.length; x++) {
     for (int y = 0; y < b[0].length; y++) {
@@ -355,6 +372,7 @@ public float[][] dot(float[][] a, float[][] b) {
 }
 
 public boolean in(int b, int[]a){
+  //test if int in a list
   for (int i = 0; i < a.length;i++){
     if (a[i] == b){
       return true;
@@ -364,6 +382,7 @@ public boolean in(int b, int[]a){
 }
 
 public int index(float[]a , float b){
+  // find where the float is in a list
   for (int i = 0; i < a.length;i++){
     if (a[i] == b){
       return i;
@@ -374,6 +393,7 @@ public int index(float[]a , float b){
 
 public int index_fitness(int[] fit, int a){
   int location;
+  // find the location of he int in a list
   for (int i=0; i< fit.length;i++){
     if (a==fit[i]){
       return i;
@@ -383,6 +403,7 @@ public int index_fitness(int[] fit, int a){
 }
 
 public float[][] sigmoid(float[][] a) {
+  // this is the activation function for my neural network to discourage use of bad nodes
     float b[][] = new float[a.length][a[0].length];
     for (int x = 0; x<a.length; x++) {
       for (int y = 0; y < a[x].length; y++) {
@@ -393,6 +414,7 @@ public float[][] sigmoid(float[][] a) {
   }
 
 public float[] con(float[]a, float[]b, float[] c, float[] d){
+  //shorthand for concatinate as it bring the 2dimensional array to a 1d array
   float[] e = new float[16];
   for (int i=0;i<3;i++){
     e[i] = a[i];
@@ -415,6 +437,7 @@ public boolean collide(float bx, float by, float v, float r) {
 }
 
 public int max_board() {
+  //TODO find out wat this function is for
   float max = 0;
   for (int x=0; x<board.length; x++) {
     if (max<max(board[x])) {

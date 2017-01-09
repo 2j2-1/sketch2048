@@ -101,7 +101,7 @@ class Population {
       sort_pop();
       //println(pop_fitness);
       //for (int i = 0; i<pop.length;i++){
-      println(pop[pop.length-1].fitness);
+      //println(pop[pop.length-1].fitness);
       //}
 
       println();
