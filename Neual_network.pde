@@ -1,15 +1,14 @@
-class neural_network {
-  float[][][] weightList;
+class Neural_Network {
+  float[][][] weight_list;
 
 
-  neural_network(float[][][] WeightList) {
-    weightList = WeightList;
-    //println(weightList);
+  Neural_Network(float[][][] _weight_list) {
+    weight_list = _weight_list;
   }
 
   float[][] forward(float[][] x) {
-    for (int i =0; i<weightList.length;i++){
-      x = sigmoid(dot(x, weightList[i]));
+    for (int i =0; i<weight_list.length;i++){
+      x = dot(x, weight_list[i]);
     }
     return x;
   }

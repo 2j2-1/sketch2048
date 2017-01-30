@@ -31,7 +31,7 @@ int index(float[]a , float b){
   return -1;
 }
 
-int index_fitness(int[] fit, int a){
+int indexFitness(int[] fit, int a){
   int location;
   // find the location of he int in a list
   for (int i=0; i< fit.length;i++){
@@ -42,18 +42,8 @@ int index_fitness(int[] fit, int a){
   return -1;
 }
 
-float[][] sigmoid(float[][] a) {
-  // this is the activation function for my neural network to discourage use of bad nodes
-    float b[][] = new float[a.length][a[0].length];
-    for (int x = 0; x<a.length; x++) {
-      for (int y = 0; y < a[x].length; y++) {
-        b[x][y] = 1/(exp(a[x][y]));
-      }
-    }
-    return a;
-  }
 
-float[] con(float[]a, float[]b, float[] c, float[] d){
+float[] con(float[] a, float[] b, float[] c, float[] d){
   //shorthand for concatinate as it bring the 2dimensional array to a 1d array
   float[] e = new float[16];
   for (int i=0;i<3;i++){
@@ -76,13 +66,24 @@ boolean collide(float bx, float by, float v, float r) {
   }
 }
 
-int max_board() {
-  //TODO find out wat this function is for
+int maxBoard() {
   float max = 0;
+  //finds the max int on the board
   for (int x=0; x<board.length; x++) {
     if (max<max(board[x])) {
       max = max(board[x]);
     }
   }
   return ceil(max);
+}
+
+int blankBoard(float[] board) {
+  int count = 1;
+  //count the number of blanks on the board 
+  for (int x=0; x<board.length; x++) {
+    if (board[x]==0) {
+      count++;
+    }
+  }
+  return count;
 }
