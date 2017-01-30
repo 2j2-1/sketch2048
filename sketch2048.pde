@@ -1,13 +1,13 @@
 void setup() {
-  fullScreen();
-  load();
-  img.resize(width, height);
-  seperation = 785;
-  gameMenuSetup();
-  create_sliders();
-  node_setup();
-
+	fullScreen();
+	load();
+	img.resize(width, height);
+	gameMenuSetup();
+	createSliders();
+	nodeSetup();
+  //testing();
 }
+
 void draw() {
-  menuDisplay(menu);
+	menuDisplay(menu);
 }

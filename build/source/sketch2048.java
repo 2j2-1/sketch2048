@@ -241,31 +241,24 @@ class Slider {
 }
 class DNA {
   float genes[][][];
-
+  float fitness;
   DNA(float[][][] _genes) {
     genes = _genes;
   }
 
-  public void crossover(DNA partner) {
-    float newGenes[][][] = genes;
+  public void mutation(DNA partner) {
     for (int x = 0; x < genes.length; x++) {
-      for (int y = 0; y < genes[x].length; y++) {
-        for (int z = 0; z < genes[x][y].length; z++) {
-      // if (random(1)<0.5) {
-        newGenes[x][y][z] = (genes[x][y][z]+partner.genes[x][y][z])/2;
-      // } else {
-      //   newGenes[i] = partner.genes[i];
-      // }
-        }
-      }
-    }
-    genes = newGenes;
-  }
-
-  public void mutation() {
-    for (int x = 0; x < genes.length; x++) {  for (int y = 0; y < genes[x].length; y++) {  for (int z = 0; z < genes[x][y].length; z++) {  if (random(1) < 0.01f) {
-      genes[x][y][z] = random(-1, 1);
-     }}}}}
+        for (int y = 0; y < genes[x].length; y++) {
+            for (int z = 0; z < genes[x][y].length; z++) {
+                if (random(1) < 0.001f) {
+                    genes[x][y][z] += random(-0.1f, 0.1f);}
+                else{
+                  genes[x][y][z] = partner.genes[x][y][z];
+                }
+                }
+                }
+                }
+              }
 
 }
 public void display_slider() {
@@ -361,9 +354,28 @@ public float[][] dot(float[][] a, float[][] b) {
   return c;
 }
 
+public boolean in(int b, int[]a){
+  for (int i = 0; i < a.length;i++){
+    if (a[i] == b){
+      return true;
+    }
+  }
+  return false;
+}
+
 public int index(float[]a , float b){
   for (int i = 0; i < a.length;i++){
     if (a[i] == b){
+      return i;
+    }
+  }
+  return -1;
+}
+
+public int index_fitness(int[] fit, int a){
+  int location;
+  for (int i=0; i< fit.length;i++){
+    if (a==fit[i]){
       return i;
     }
   }
@@ -379,7 +391,7 @@ public float[][] sigmoid(float[][] a) {
     }
     return a;
   }
-  
+
 public float[] con(float[]a, float[]b, float[] c, float[] d){
   float[] e = new float[16];
   for (int i=0;i<3;i++){
@@ -413,41 +425,16 @@ public int max_board() {
 }
 public void keyPressed() {
   if (keyCode == 32) {
-    testingPop.fitness();
-    testingPop.breed();
-    testingPop.fitness();
+    for (int i=0;i<5;i++){
+      testingPop.evolve();}
     println(testingPop.average_fitness());
+  
     println();
   }
   else {
     move(keyCode);
   }
 }
-
-float[][] saveBoard = new float[1][16];
-//float[][] testBoard = new float[1][16];
-//boolean same;
-//boolean found = false;
-//while (!found) {
-//  same = true;
-//  testBoard[0] = concat(concat(board[0], board[1]), concat(board[2], board[3]));
-//  saveBoard[0] = concat(concat(board[0], board[1]), concat(board[2], board[3]));
-//  nn.forward(testBoard);
-//  testBoard[0] = concat(concat(board[0], board[1]), concat(board[2], board[3]));
-
-//  for (int x =0; x < 16; x++) {
-//    println(round(saveBoard[0][x]), round(testBoard[0][x]));
-//    if (round(saveBoard[0][x]) != round(testBoard[0][x])) {
-//      //println(round(saveBoard[0][x]), round(testBoard[0][x]));
-//      same = false;
-//      break;
-//    }
-//  }
-//  println();
-//  if (same) {
-//    found = true;
-//  }
-//println(score*max_board());
 public void gameMenuSetup() {
   menuButton = new Button(inbetween+xOff, board_dimension*seperation/board_dimension+inbetween+yOff, ceil(((seperation/board_dimension-1))*2-inbetween/2), 50, mono24);
   nextButton = new Button(inbetween+xOff+((seperation/board_dimension-1)*2-inbetween/2)+inbetween/2+2, board_dimension*seperation/board_dimension+inbetween+yOff, ceil(((seperation/board_dimension-1))*2-inbetween/2), 50, mono24);
@@ -506,7 +493,7 @@ public void mousePressed() {
       //println(num_rows);
       a = new Weight(num_rows);
       nn = new neural_network(a.allWeights);
-      testingPop = new Population(1000, num_rows);
+      testingPop = new Population(100, num_rows);
       menu=1;
     }
   }
@@ -525,25 +512,11 @@ class neural_network {
     //println(weightList);
   }
 
-
-  public void forward(float[][] x) {
+  public float[][] forward(float[][] x) {
     for (int i =0; i<weightList.length;i++){
-      x = dot(x, weightList[i]);
+      x = sigmoid(dot(x, weightList[i]));
     }
-    switch(index(x[0],max(x[0]))){
-    case 0:
-    move(UP);
-    break;
-    case 1:
-    move(DOWN);
-    break;
-    case 2:
-    move(LEFT);
-    break;
-    case 3:
-    move(RIGHT);
-    break;
-  }
+    return x;
   }
 }
 int board_dimension=4;
@@ -558,6 +531,7 @@ int yOffText=0;
 int[] num_rows;
 
 float[][] board = new float[board_dimension][board_dimension];
+float[][] saveBoard = new float[1][16];
 
 int[] tileColor= {color(255, 198, 150), color(255, 179, 110), color(255, 136, 18), color(255, 110, 0), color(255, 90, 0), color(255, 60, 0), color(255, 0, 0), color(255, 200, 0), color(255, 255, 0), color(128, 255, 0), color(0, 255, 0), color(0, 255, 255), color(0, 0, 255), color(255, 0, 255), color(255, 128, 255)};
 
@@ -759,11 +733,6 @@ class Population {
     pop_fitness = new int[size];
   }
 
-  public void mutate() {
-    for (int i = 0; i<size; i++) {
-      pop[i].mutation();
-    }
-  }
 
   public void fitness() {
     for (int i = 0; i<size; i++) {
@@ -771,42 +740,88 @@ class Population {
       neural_network a = new neural_network(pop[i].genes);
       reset();
       pop_fitness[i]=0;
+      pop[i].fitness=0;
       for (int j=0; j<500; j++) {
-        a.forward(testBoard);
+        testBoard[0] = concat(concat(board[0], board[1]), concat(board[2], board[3]));
+        float[][] x = a.forward(testBoard);
+        switch(index(x[0],max(x[0]))){
+        case 0:
+        move(UP);
+        break;
+        case 1:
+        move(DOWN);
+        break;
+        case 2:
+        move(LEFT);
+        break;
+        case 3:
+        move(RIGHT);
+        break;
+      }
       }
       pop_fitness[i]=score*max_board();
-      //println(pop_fitness[i]);
+      pop[i].fitness= pop_fitness[i];
     }
     max_fitness = max(pop_fitness);
   }
 
   public void breed() {
     temp = pop;
-    for (int i = 0; i<size; i++) {
-      int r = floor(random(max_fitness));
-      boolean exit = false;
-      while (!exit) {
-        int q =floor(random(size));
-        if (pop_fitness[q] >= r) {
-          pop[i].crossover(temp[q]);
-        }
-        exit = true;
-      }
+    float top_percentage=0.05f;
+    for (int i = 0; i<=PApplet.parseInt(pop.length*(1.0f-top_percentage)); i++) {
+      //println(i);
+      pop[i].mutation(pop[PApplet.parseInt(random(PApplet.parseInt(pop.length*(1.0f-top_percentage)),pop.length))]);
     }
   }
 
   public void fitness_power(float power) {
     for (int i = 0; i<size; i++) {
       pop_fitness[i] = floor(pow(pop_fitness[i], power));
+      pop[i].fitness = floor(pow(pop[i].fitness, power));
     }
     max_fitness = max(pop_fitness);
   }
+
   public float average_fitness(){
     float sum = 0;
     for (int i=0;i<pop_fitness.length;i++){
       sum+=pop_fitness[i];
     }
     return sum/pop_fitness.length;
+  }
+
+
+  public void sort_pop(){
+    int temp;
+    DNA tempDNA;
+    for (int i = 1; i<pop_fitness.length;i++){
+      for (int j = 0; j<pop_fitness.length-1;j++){
+        if (pop_fitness[j] > pop_fitness[j+1]){
+          temp = pop_fitness[j];
+          tempDNA = pop[j];
+
+          pop_fitness[j] = pop_fitness[j+1];
+          pop[j]=pop[j+1];
+
+          pop_fitness[j+1] = temp;
+          pop[j+1]=tempDNA;
+        }
+      }
+    }
+  }
+
+  public void evolve(){
+      fitness();
+      //fitness_power();
+      sort_pop();
+      //println(pop_fitness);
+      //for (int i = 0; i<pop.length;i++){
+      //println(pop[pop.length-1].fitness);
+      //}
+
+      println();
+      breed();
+
   }
 }
 public void load(){

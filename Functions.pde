@@ -1,4 +1,5 @@
 float[][] dot(float[][] a, float[][] b) {
+  //the dots function take 2 matixs and perform a matrix multiplaction for the neural network
   float[][]c = new float[a.length][b[0].length];
   for (int x = 0; x<a.length; x++) {
     for (int y = 0; y < b[0].length; y++) {
@@ -10,7 +11,18 @@ float[][] dot(float[][] a, float[][] b) {
   return c;
 }
 
+boolean in(int b, int[]a){
+  //test if int in a list
+  for (int i = 0; i < a.length;i++){
+    if (a[i] == b){
+      return true;
+    }
+  }
+  return false;
+}
+
 int index(float[]a , float b){
+  // find where the float is in a list
   for (int i = 0; i < a.length;i++){
     if (a[i] == b){
       return i;
@@ -19,17 +31,20 @@ int index(float[]a , float b){
   return -1;
 }
 
-float[][] sigmoid(float[][] a) {
-    float b[][] = new float[a.length][a[0].length];
-    for (int x = 0; x<a.length; x++) {
-      for (int y = 0; y < a[x].length; y++) {
-        b[x][y] = 1/(exp(a[x][y]));
-      }
+int indexFitness(int[] fit, int a){
+  int location;
+  // find the location of he int in a list
+  for (int i=0; i< fit.length;i++){
+    if (a==fit[i]){
+      return i;
     }
-    return a;
   }
-  
-float[] con(float[]a, float[]b, float[] c, float[] d){
+  return -1;
+}
+
+
+float[] con(float[] a, float[] b, float[] c, float[] d){
+  //shorthand for concatinate as it bring the 2dimensional array to a 1d array
   float[] e = new float[16];
   for (int i=0;i<3;i++){
     e[i] = a[i];
@@ -51,12 +66,24 @@ boolean collide(float bx, float by, float v, float r) {
   }
 }
 
-int max_board() {
+int maxBoard() {
   float max = 0;
+  //finds the max int on the board
   for (int x=0; x<board.length; x++) {
     if (max<max(board[x])) {
       max = max(board[x]);
     }
   }
   return ceil(max);
+}
+
+int blankBoard(float[] board) {
+  int count = 1;
+  //count the number of blanks on the board 
+  for (int x=0; x<board.length; x++) {
+    if (board[x]==0) {
+      count++;
+    }
+  }
+  return count;
 }
