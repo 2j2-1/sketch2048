@@ -16,6 +16,7 @@ public class sketch2048 extends PApplet {
 
 public void setup() {
 	
+	//size(1440,900);
 	load();
 	img.resize(width, height);
 	gameMenuSetup();
@@ -349,7 +350,7 @@ public void drawBoard() {
       rect((x*seperation/4)+inbetween+x_off, y*seperation/4+inbetween+y_off, (seperation/4-1)-inbetween/2, (seperation/4-1)-inbetween/2, 20);
       fill(0);
       textFont(mono48);
-      text(str(floor(board[x][y])), (x*seperation/4)+inbetween+x_off-2, y*seperation/4+inbetween+y_off-2, (seperation/4-1)-inbetween*2, (seperation/4-1)-inbetween*2);
+      text(str(floor(board[x][y])), (x*seperation/4)+inbetween+x_off-2, y*seperation/4+inbetween+y_off-2, (seperation/4-1)-inbetween/2, (seperation/4-1)-inbetween/2);
     }
   }
 }
@@ -962,7 +963,7 @@ public void testing(){
   }
   exit();
 }
-  public void settings() { 	size(1440,900); }
+  public void settings() { 	fullScreen(); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "--present", "--window-color=#666666", "--hide-stop", "sketch2048" };
     if (passedArgs != null) {
