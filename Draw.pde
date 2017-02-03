@@ -39,7 +39,7 @@ void nodeDisplay() {
   int x_l_lim = 850;
   int x_u_lim = width-50;
   int y_l_lim = 50;
-  int y_u_lim = height+200;
+  int y_u_lim = height+50;
   fill(tile_color[0]);
   for (int x = 0; x < num_rows.length-1; x++) {
     for (int y = 0; y < num_rows[x]; y++) {
@@ -57,11 +57,11 @@ void nodeDisplay() {
     for (int y = 0; y < num_rows[x]; y++) {
       ellipse(
         map((((width/num_rows.length+1)*x+1)+(width/num_rows.length+1)/2), 0, width, x_l_lim, x_u_lim),
-        map((((800/num_rows[x])*y)+800/num_rows[x]/2), 0, height, y_l_lim, y_u_lim), 50, 50);
+        map((((800/num_rows[x])*y)+800/num_rows[x]/2), 0, height, y_l_lim, y_u_lim), 40, 40);
       for (int i = 0; i < num_rows[x+1]; i++) {
         ellipse(
           map((((width/num_rows.length+1)*(x+1))+(width/num_rows.length+1)/2), 0, width, x_l_lim, x_u_lim),
-          map((((800/num_rows[x+1])*i)+800/num_rows[x+1]/2), 0, height, y_l_lim, y_u_lim), 50, 50);
+          map((((800/num_rows[x+1])*i)+800/num_rows[x+1]/2), 0, height, y_l_lim, y_u_lim), 40, 40);
       }
     }
   }
@@ -81,7 +81,7 @@ void drawBoard() {
       rect((x*seperation/4)+inbetween+x_off, y*seperation/4+inbetween+y_off, (seperation/4-1)-inbetween/2, (seperation/4-1)-inbetween/2, 20);
       fill(0);
       textFont(mono48);
-      text(str(floor(board[x][y])), (x*seperation/4)+inbetween+x_off-2, y*seperation/4+inbetween+y_off-2, (seperation/4-1)-inbetween/2, (seperation/4-1)-inbetween/2);
+      text(str(floor(board[x][y])), (x*seperation/4)+inbetween+x_off-2, y*seperation/4+inbetween+y_off-2, (seperation/4-1)-inbetween*2, (seperation/4-1)-inbetween*2);
     }
   }
 }

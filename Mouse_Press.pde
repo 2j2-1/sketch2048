@@ -14,6 +14,8 @@ void mousePressed() {
     }
   } else if (menu==2) {
     if (next_button.collide()) {
+      menu =1;
+      redraw();
       a = new Weight(num_rows);
       testing_pop = new Population(testing_pop_size, num_rows);
       for (int i=0;i<testing_pop_gens;i++){

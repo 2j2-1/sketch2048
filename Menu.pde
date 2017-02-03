@@ -1,6 +1,6 @@
 void gameMenuSetup() {
   menu_button = new Button(inbetween+x_off, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
-  menu_button_settings = new Button(inbetween+x_off+650, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
+  menu_button_settings = new Button(inbetween+x_off+450, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
   next_button = new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
   score_button= new Button(inbetween+x_off, inbetween+43, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
   heighest_button= new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, inbetween+43, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);

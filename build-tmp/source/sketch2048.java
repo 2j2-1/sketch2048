@@ -307,7 +307,7 @@ public void nodeDisplay() {
   int x_l_lim = 850;
   int x_u_lim = width-50;
   int y_l_lim = 50;
-  int y_u_lim = height+200;
+  int y_u_lim = height+50;
   fill(tile_color[0]);
   for (int x = 0; x < num_rows.length-1; x++) {
     for (int y = 0; y < num_rows[x]; y++) {
@@ -325,11 +325,11 @@ public void nodeDisplay() {
     for (int y = 0; y < num_rows[x]; y++) {
       ellipse(
         map((((width/num_rows.length+1)*x+1)+(width/num_rows.length+1)/2), 0, width, x_l_lim, x_u_lim),
-        map((((800/num_rows[x])*y)+800/num_rows[x]/2), 0, height, y_l_lim, y_u_lim), 50, 50);
+        map((((800/num_rows[x])*y)+800/num_rows[x]/2), 0, height, y_l_lim, y_u_lim), 40, 40);
       for (int i = 0; i < num_rows[x+1]; i++) {
         ellipse(
           map((((width/num_rows.length+1)*(x+1))+(width/num_rows.length+1)/2), 0, width, x_l_lim, x_u_lim),
-          map((((800/num_rows[x+1])*i)+800/num_rows[x+1]/2), 0, height, y_l_lim, y_u_lim), 50, 50);
+          map((((800/num_rows[x+1])*i)+800/num_rows[x+1]/2), 0, height, y_l_lim, y_u_lim), 40, 40);
       }
     }
   }
@@ -349,7 +349,7 @@ public void drawBoard() {
       rect((x*seperation/4)+inbetween+x_off, y*seperation/4+inbetween+y_off, (seperation/4-1)-inbetween/2, (seperation/4-1)-inbetween/2, 20);
       fill(0);
       textFont(mono48);
-      text(str(floor(board[x][y])), (x*seperation/4)+inbetween+x_off-2, y*seperation/4+inbetween+y_off-2, (seperation/4-1)-inbetween/2, (seperation/4-1)-inbetween/2);
+      text(str(floor(board[x][y])), (x*seperation/4)+inbetween+x_off-2, y*seperation/4+inbetween+y_off-2, (seperation/4-1)-inbetween*2, (seperation/4-1)-inbetween*2);
     }
   }
 }
@@ -501,7 +501,7 @@ else {
 }
 public void gameMenuSetup() {
   menu_button = new Button(inbetween+x_off, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
-  menu_button_settings = new Button(inbetween+x_off+650, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
+  menu_button_settings = new Button(inbetween+x_off+450, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
   next_button = new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
   score_button= new Button(inbetween+x_off, inbetween+43, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
   heighest_button= new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, inbetween+43, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
@@ -556,6 +556,8 @@ public void mousePressed() {
     }
   } else if (menu==2) {
     if (next_button.collide()) {
+      menu =1;
+      redraw();
       a = new Weight(num_rows);
       testing_pop = new Population(testing_pop_size, num_rows);
       for (int i=0;i<testing_pop_gens;i++){
@@ -587,7 +589,7 @@ class Neural_Network {
 }
 // sets all global varibles need to keep the rest of the program neat 
 
-int seperation=785;
+int seperation=700;
 int inbetween = 10;
 int x_off = 50;
 int y_off = 100;
@@ -629,10 +631,10 @@ PFont title;
 
 ArrayList<Slider> sliders = new ArrayList();
 
-Slider depth = new Slider(100, 100, 500, 1, 7, "Node Depth:");
-Slider population_size = new Slider(400, 100, 1000, 1, 1000, "Population Size:");
-Slider training_iterations = new Slider(400, 200, 1000, 1, 1000, "Training Iterations");
-Slider training_moves = new Slider(400, 300, 1000, 1, 1000, "Moves Per Training Iteration");
+Slider depth = new Slider(100, 100, 500, 1, 6, "Node Depth:");
+Slider population_size = new Slider(200, 100, 950, 1, 1000, "Population Size:");
+Slider training_iterations = new Slider(200, 200, 950, 1, 1000, "Training Iterations");
+Slider training_moves = new Slider(200, 300, 950, 1, 1000, "Moves Per Training Iteration");
 
 Button new_game;
 Button neural_network_button;
@@ -960,7 +962,7 @@ public void testing(){
   }
   exit();
 }
-  public void settings() { 	fullScreen(); }
+  public void settings() { 	size(1440,900); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "--present", "--window-color=#666666", "--hide-stop", "sketch2048" };
     if (passedArgs != null) {

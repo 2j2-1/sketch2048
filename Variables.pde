@@ -1,6 +1,6 @@
 // sets all global varibles need to keep the rest of the program neat 
 
-int seperation=785;
+int seperation=700;
 int inbetween = 10;
 int x_off = 50;
 int y_off = 100;
@@ -42,10 +42,10 @@ PFont title;
 
 ArrayList<Slider> sliders = new ArrayList();
 
-Slider depth = new Slider(100, 100, 500, 1, 7, "Node Depth:");
-Slider population_size = new Slider(400, 100, 1000, 1, 1000, "Population Size:");
-Slider training_iterations = new Slider(400, 200, 1000, 1, 1000, "Training Iterations");
-Slider training_moves = new Slider(400, 300, 1000, 1, 1000, "Moves Per Training Iteration");
+Slider depth = new Slider(100, 100, 500, 1, 6, "Node Depth:");
+Slider population_size = new Slider(200, 100, 950, 1, 1000, "Population Size:");
+Slider training_iterations = new Slider(200, 200, 950, 1, 1000, "Training Iterations");
+Slider training_moves = new Slider(200, 300, 950, 1, 1000, "Moves Per Training Iteration");
 
 Button new_game;
 Button neural_network_button;
