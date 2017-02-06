@@ -6,8 +6,8 @@ void gameMenuSetup() {
   heighest_button= new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, inbetween+43, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
   new_game_button= new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
   new_game = new Button((width/2)-200, 300, 400, 100, mono48);
-  neural_network_button = new Button((width/2)-200, 500, 400, 100, mono48);
-  settings = new Button((width/2)-200, 700, 400, 100, mono48);
+  neural_network_button = new Button((width/2)-200, 450, 400, 100, mono48);
+  settings = new Button((width/2)-200, 600, 400, 100, mono48);
   new_game_button.text = "New Game";
   menu_button.text = "Menu";
   menu_button_settings.text = "Menu";

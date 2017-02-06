@@ -1,6 +1,6 @@
 void setup() {
-	fullScreen();
-	//size(1440,900);
+	//fullScreen();
+	size(1366,768);
 	load();
 	img.resize(width, height);
 	gameMenuSetup();

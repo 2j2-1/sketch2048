@@ -15,8 +15,8 @@ import java.io.IOException;
 public class sketch2048 extends PApplet {
 
 public void setup() {
+	//fullScreen();
 	
-	//size(1440,900);
 	load();
 	img.resize(width, height);
 	gameMenuSetup();
@@ -305,10 +305,10 @@ public void displaySliderSettings() {
 }
 
 public void nodeDisplay() {
-  int x_l_lim = 850;
+  int x_l_lim = 750;
   int x_u_lim = width-50;
   int y_l_lim = 50;
-  int y_u_lim = height+50;
+  int y_u_lim = height-50;
   fill(tile_color[0]);
   for (int x = 0; x < num_rows.length-1; x++) {
     for (int y = 0; y < num_rows[x]; y++) {
@@ -508,8 +508,8 @@ public void gameMenuSetup() {
   heighest_button= new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, inbetween+43, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
   new_game_button= new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
   new_game = new Button((width/2)-200, 300, 400, 100, mono48);
-  neural_network_button = new Button((width/2)-200, 500, 400, 100, mono48);
-  settings = new Button((width/2)-200, 700, 400, 100, mono48);
+  neural_network_button = new Button((width/2)-200, 450, 400, 100, mono48);
+  settings = new Button((width/2)-200, 600, 400, 100, mono48);
   new_game_button.text = "New Game";
   menu_button.text = "Menu";
   menu_button_settings.text = "Menu";
@@ -590,7 +590,7 @@ class Neural_Network {
 }
 // sets all global varibles need to keep the rest of the program neat 
 
-int seperation=700;
+int seperation=600;
 int inbetween = 10;
 int x_off = 50;
 int y_off = 100;
@@ -632,10 +632,10 @@ PFont title;
 
 ArrayList<Slider> sliders = new ArrayList();
 
-Slider depth = new Slider(100, 100, 500, 1, 6, "Node Depth:");
-Slider population_size = new Slider(200, 100, 950, 1, 1000, "Population Size:");
-Slider training_iterations = new Slider(200, 200, 950, 1, 1000, "Training Iterations");
-Slider training_moves = new Slider(200, 300, 950, 1, 1000, "Moves Per Training Iteration");
+Slider depth = new Slider(100, 100, 500, 1, 5, "Node Depth:");
+Slider population_size = new Slider(150, 100, 950, 1, 1000, "Population Size:");
+Slider training_iterations = new Slider(150, 200, 950, 1, 1000, "Training Iterations");
+Slider training_moves = new Slider(150, 300, 950, 1, 1000, "Moves Per Training Iteration");
 
 Button new_game;
 Button neural_network_button;
@@ -963,7 +963,7 @@ public void testing(){
   }
   exit();
 }
-  public void settings() { 	fullScreen(); }
+  public void settings() { 	size(1366,768); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "--present", "--window-color=#666666", "--hide-stop", "sketch2048" };
     if (passedArgs != null) {

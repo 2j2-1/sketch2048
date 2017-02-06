@@ -36,10 +36,10 @@ void displaySliderSettings() {
 }
 
 void nodeDisplay() {
-  int x_l_lim = 850;
+  int x_l_lim = 750;
   int x_u_lim = width-50;
   int y_l_lim = 50;
-  int y_u_lim = height+50;
+  int y_u_lim = height-50;
   fill(tile_color[0]);
   for (int x = 0; x < num_rows.length-1; x++) {
     for (int y = 0; y < num_rows[x]; y++) {
