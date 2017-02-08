@@ -15,8 +15,12 @@ import java.io.IOException;
 public class sketch2048 extends PApplet {
 
 public void setup() {
-	//fullScreen();
 	
+	//size(1366,768);
+	//size(1440, 900);
+	//size(1920,1080);
+	//size(1280, 1024);
+	//size(600, 512);
 	load();
 	img.resize(width, height);
 	gameMenuSetup();
@@ -228,12 +232,14 @@ class Slider {
     popMatrix();
     //round to a predefined limit to prevent float values unless specified
     value = round((((slide_x+25)-x)/(len))*(max-min))+min;
-    rect(x+len+25,y-20,100,50);
-    fill(255);
+    rect(x+len+25,y-20,55,50);
+    fill(0);
     textAlign(RIGHT, CENTER);
-    text(str(value),floor(x+len+25),y-20,90,50);
+    text(str(value),floor(x+len+25),y-20,50,50);
+    fill(255);
     textAlign(CENTER, RIGHT);
     text(slider_text,x,y-50,len,y);
+
   }
 
   public void collide() {
@@ -305,32 +311,35 @@ public void displaySliderSettings() {
 }
 
 public void nodeDisplay() {
-  int x_l_lim = 750;
-  int x_u_lim = width-50;
-  int y_l_lim = 50;
-  int y_u_lim = height-50;
+  int x_l_lim = seperation+x_off;
+  int x_u_lim = width;
+  int y_l_lim = y_off/4;
+  int y_u_lim = height-y_off/2;
   fill(tile_color[0]);
+  stroke(255, 255, 255);
+  strokeWeight(2);
   for (int x = 0; x < num_rows.length-1; x++) {
     for (int y = 0; y < num_rows[x]; y++) {
       for (int i = 0; i < num_rows[x+1]; i++) {
         line(
           map((((width/num_rows.length+1)*x+1)+(width/num_rows.length+1)/2), 0, width, x_l_lim, x_u_lim), 
-          map((((800/num_rows[x])*y)+800/num_rows[x]/2), 0, height, y_l_lim, y_u_lim),
+          map((((height/num_rows[x])*y)+height/num_rows[x]/2), 0, height, y_l_lim, y_u_lim),
           map((((width/num_rows.length+1)*(x+1)+1)+(width/num_rows.length+1)/2), 0, width, x_l_lim, x_u_lim),
-          map((((800/num_rows[x+1])*i)+800/num_rows[x+1]/2), 0, height, y_l_lim, y_u_lim));
+          map((((height/num_rows[x+1])*i)+height/num_rows[x+1]/2), 0, height, y_l_lim, y_u_lim));
       }
     }
   }
-
+  stroke(0,0,0);
+  strokeWeight(1);
   for (int x = 0; x < num_rows.length-1; x++) {
     for (int y = 0; y < num_rows[x]; y++) {
       ellipse(
         map((((width/num_rows.length+1)*x+1)+(width/num_rows.length+1)/2), 0, width, x_l_lim, x_u_lim),
-        map((((800/num_rows[x])*y)+800/num_rows[x]/2), 0, height, y_l_lim, y_u_lim), 40, 40);
+        map((((height/num_rows[x])*y)+height/num_rows[x]/2), 0, height, y_l_lim, y_u_lim), 40, 40);
       for (int i = 0; i < num_rows[x+1]; i++) {
         ellipse(
           map((((width/num_rows.length+1)*(x+1))+(width/num_rows.length+1)/2), 0, width, x_l_lim, x_u_lim),
-          map((((800/num_rows[x+1])*i)+800/num_rows[x+1]/2), 0, height, y_l_lim, y_u_lim), 40, 40);
+          map((((height/num_rows[x+1])*i)+height/num_rows[x+1]/2), 0, height, y_l_lim, y_u_lim), 40, 40);
       }
     }
   }
@@ -347,10 +356,10 @@ public void drawBoard() {
         // choses color from a list based on its values as all number are 2^x
         fill(tile_color[floor(log(board[x][y])/log(2))]);
       }
-      rect((x*seperation/4)+inbetween+x_off, y*seperation/4+inbetween+y_off, (seperation/4-1)-inbetween/2, (seperation/4-1)-inbetween/2, 20);
+      rect((x*seperation/4)+inbetween+x_off, y*seperation/4+(inbetween*2)+y_off, (seperation/4-1)-inbetween/2, (seperation/4-1)-inbetween/2, 20);
       fill(0);
       textFont(mono48);
-      text(str(floor(board[x][y])), (x*seperation/4)+inbetween+x_off-2, y*seperation/4+inbetween+y_off-2, (seperation/4-1)-inbetween/2, (seperation/4-1)-inbetween/2);
+      text(str(floor(board[x][y])), (x*seperation/4)+inbetween+x_off-2, y*seperation/4+(inbetween*2)+y_off, (seperation/4-1)-inbetween/2, (seperation/4-1)-inbetween/2);
     }
   }
 }
@@ -501,15 +510,15 @@ else {
 }
 }
 public void gameMenuSetup() {
-  menu_button = new Button(inbetween+x_off, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
-  menu_button_settings = new Button(inbetween+x_off+450, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
-  next_button = new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
-  score_button= new Button(inbetween+x_off, inbetween+43, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
-  heighest_button= new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, inbetween+43, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
-  new_game_button= new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
-  new_game = new Button((width/2)-200, 300, 400, 100, mono48);
-  neural_network_button = new Button((width/2)-200, 450, 400, 100, mono48);
-  settings = new Button((width/2)-200, 600, 400, 100, mono48);
+  menu_button = new Button(inbetween+x_off, 4*seperation/4+(inbetween*2)+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
+  menu_button_settings = new Button(width/2-(ceil(((seperation/4-1))*2-inbetween/2)/2)-x_off/2, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
+  next_button = new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, 4*seperation/4+(inbetween*2)+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
+  score_button= new Button(inbetween+x_off, y_off+inbetween-50, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
+  heighest_button= new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, y_off+inbetween-50, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
+  new_game_button= new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, 4*seperation/4+(inbetween*2)+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
+  new_game = new Button((width/2)-constrain(PApplet.parseInt(width/5),0,200), 300, constrain(PApplet.parseInt(width/2.5f),0,400), 100, mono48);
+  neural_network_button = new Button((width/2)-constrain(PApplet.parseInt(width/5),0,200), 450, constrain(PApplet.parseInt(width/2.5f),0,400), 100, mono48);
+  settings = new Button((width/2)-constrain(PApplet.parseInt(width/5),0,200), 600, constrain(PApplet.parseInt(width/2.5f),0,400), 100, mono48);
   new_game_button.text = "New Game";
   menu_button.text = "Menu";
   menu_button_settings.text = "Menu";
@@ -590,10 +599,10 @@ class Neural_Network {
 }
 // sets all global varibles need to keep the rest of the program neat 
 
-int seperation=600;
+int seperation;
 int inbetween = 10;
 int x_off = 50;
-int y_off = 100;
+int y_off;
 int score = 0;
 int menu =0;
 int x_off_text=10;
@@ -632,10 +641,10 @@ PFont title;
 
 ArrayList<Slider> sliders = new ArrayList();
 
-Slider depth = new Slider(100, 100, 500, 1, 5, "Node Depth:");
-Slider population_size = new Slider(150, 100, 950, 1, 1000, "Population Size:");
-Slider training_iterations = new Slider(150, 200, 950, 1, 1000, "Training Iterations");
-Slider training_moves = new Slider(150, 300, 950, 1, 1000, "Moves Per Training Iteration");
+Slider depth;
+Slider population_size;
+Slider training_iterations;
+Slider training_moves;
 
 Button new_game;
 Button neural_network_button;
@@ -919,17 +928,24 @@ class Population {
   }
 }
 public void load(){
-  img = loadImage("wooden background.png");
+  img = loadImage("autistic-neural-network-3-1.jpg");
   mono24 = loadFont("Ebrima-Bold-24.vlw");
   mono48 = loadFont("Ebrima-Bold-48.vlw");
   mono = loadFont("Ebrima-Bold-100.vlw");
   title = loadFont("AnonymousPro-200.vlw");
+  seperation=PApplet.parseInt(height/1.3f);
+  y_off = PApplet.parseInt(height/10);
+  depth = new Slider(x_off, y_off, seperation-x_off-25, 1, 5, "Node Depth:");
+  population_size = new Slider(x_off, y_off, width-x_off*3, 1, 999, "Population Size:");
+  training_iterations = new Slider(x_off, y_off+100, width-x_off*3, 1, 999, "Training Iterations");
+  training_moves = new Slider(x_off, y_off+200, width-x_off*3, 1, 999, "Moves Per Training Iteration");
+
   reset();
 }
 
 public void createSliders() {
   for (int i=0; i<depth.max+1; i++) {
-    sliders.add(new Slider(100, (100*i)+200, 500, 1, 10, "Nodes in  row "+(i+1)));
+    sliders.add(new Slider(x_off, (100*i)+200, seperation-x_off-25, 1, 10, "Nodes in  row "+(i+1)));
   }
 }
 
@@ -963,7 +979,7 @@ public void testing(){
   }
   exit();
 }
-  public void settings() { 	size(1366,768); }
+  public void settings() { 	fullScreen(); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "--present", "--window-color=#666666", "--hide-stop", "sketch2048" };
     if (passedArgs != null) {

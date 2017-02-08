@@ -73,12 +73,14 @@ class Slider {
     popMatrix();
     //round to a predefined limit to prevent float values unless specified
     value = round((((slide_x+25)-x)/(len))*(max-min))+min;
-    rect(x+len+25,y-20,100,50);
-    fill(255);
+    rect(x+len+25,y-20,55,50);
+    fill(0);
     textAlign(RIGHT, CENTER);
-    text(str(value),floor(x+len+25),y-20,90,50);
+    text(str(value),floor(x+len+25),y-20,50,50);
+    fill(255);
     textAlign(CENTER, RIGHT);
     text(slider_text,x,y-50,len,y);
+
   }
 
   void collide() {

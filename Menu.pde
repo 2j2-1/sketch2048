@@ -1,13 +1,13 @@
 void gameMenuSetup() {
-  menu_button = new Button(inbetween+x_off, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
-  menu_button_settings = new Button(inbetween+x_off+450, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
-  next_button = new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
-  score_button= new Button(inbetween+x_off, inbetween+43, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
-  heighest_button= new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, inbetween+43, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
-  new_game_button= new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
-  new_game = new Button((width/2)-200, 300, 400, 100, mono48);
-  neural_network_button = new Button((width/2)-200, 450, 400, 100, mono48);
-  settings = new Button((width/2)-200, 600, 400, 100, mono48);
+  menu_button = new Button(inbetween+x_off, 4*seperation/4+(inbetween*2)+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
+  menu_button_settings = new Button(width/2-(ceil(((seperation/4-1))*2-inbetween/2)/2)-x_off/2, 4*seperation/4+inbetween+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
+  next_button = new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, 4*seperation/4+(inbetween*2)+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
+  score_button= new Button(inbetween+x_off, y_off+inbetween-50, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
+  heighest_button= new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, y_off+inbetween-50, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
+  new_game_button= new Button(inbetween+x_off+((seperation/4-1)*2-inbetween/2)+inbetween/2+2, 4*seperation/4+(inbetween*2)+y_off, ceil(((seperation/4-1))*2-inbetween/2), 50, mono24);
+  new_game = new Button((width/2)-constrain(int(width/5),0,200), 300, constrain(int(width/2.5),0,400), 100, mono48);
+  neural_network_button = new Button((width/2)-constrain(int(width/5),0,200), 450, constrain(int(width/2.5),0,400), 100, mono48);
+  settings = new Button((width/2)-constrain(int(width/5),0,200), 600, constrain(int(width/2.5),0,400), 100, mono48);
   new_game_button.text = "New Game";
   menu_button.text = "Menu";
   menu_button_settings.text = "Menu";
