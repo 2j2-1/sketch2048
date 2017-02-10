@@ -8,8 +8,8 @@ class Weight {
   float[][] w7;
   float[][] w8;
   int depth;
-  float random_lower_lim = -1;
-  float random_upper_lim = 1;
+  float random_lower_lim = -2;
+  float random_upper_lim = 2;
   float[][][] all_weights;
   int[] row_size;
   

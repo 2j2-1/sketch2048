@@ -42,19 +42,6 @@ int indexFitness(int[] fit, int a){
   return -1;
 }
 
-
-float[] con(float[] a, float[] b, float[] c, float[] d){
-  //shorthand for concatinate as it bring the 2dimensional array to a 1d array
-  float[] e = new float[16];
-  for (int i=0;i<3;i++){
-    e[i] = a[i];
-    e[i+1] = b[i];
-    e[i+2] = c[i];
-    e[i+3] = d[i];
-  }
-  return e;
-}
-
 boolean collide(float bx, float by, float v, float r) {
   // collie test a squares and if any coordinate of the rect passed to it are are within the other it returns true
   if ((((mouseX<=bx+v)&&(mouseX>bx))||((bx<=mouseX+1)&&(bx>mouseX)))&&(((mouseY<=by+r)&&(mouseY>by))||((by<=mouseY+1)&&(by>mouseY))))

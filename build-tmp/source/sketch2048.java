@@ -15,12 +15,13 @@ import java.io.IOException;
 public class sketch2048 extends PApplet {
 
 public void setup() {
-	
+	//fullScreen();
 	//size(1366,768);
 	//size(1440, 900);
 	//size(1920,1080);
 	//size(1280, 1024);
-	//size(600, 512);
+	//size(1400,1050);
+	
 	load();
 	img.resize(width, height);
 	gameMenuSetup();
@@ -437,19 +438,6 @@ public int indexFitness(int[] fit, int a){
   return -1;
 }
 
-
-public float[] con(float[] a, float[] b, float[] c, float[] d){
-  //shorthand for concatinate as it bring the 2dimensional array to a 1d array
-  float[] e = new float[16];
-  for (int i=0;i<3;i++){
-    e[i] = a[i];
-    e[i+1] = b[i];
-    e[i+2] = c[i];
-    e[i+3] = d[i];
-  }
-  return e;
-}
-
 public boolean collide(float bx, float by, float v, float r) {
   // collie test a squares and if any coordinate of the rect passed to it are are within the other it returns true
   if ((((mouseX<=bx+v)&&(mouseX>bx))||((bx<=mouseX+1)&&(bx>mouseX)))&&(((mouseY<=by+r)&&(mouseY>by))||((by<=mouseY+1)&&(by>mouseY))))
@@ -656,9 +644,6 @@ Button heighest_button;
 Button new_game_button;
 Button next_button;
 
-
-
-
 Neural_Network nn;
 
 Weight a;
@@ -675,8 +660,8 @@ class Weight {
   float[][] w7;
   float[][] w8;
   int depth;
-  float random_lower_lim = -1;
-  float random_upper_lim = 1;
+  float random_lower_lim = -2;
+  float random_upper_lim = 2;
   float[][][] all_weights;
   int[] row_size;
   
@@ -979,7 +964,7 @@ public void testing(){
   }
   exit();
 }
-  public void settings() { 	fullScreen(); }
+  public void settings() { 	size(1600, 900); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "--present", "--window-color=#666666", "--hide-stop", "sketch2048" };
     if (passedArgs != null) {

@@ -57,9 +57,6 @@ Button heighest_button;
 Button new_game_button;
 Button next_button;
 
-
-
-
 Neural_Network nn;
 
 Weight a;
